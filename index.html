@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sumon</title>
+	<style>
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+		a, abbr, acronym, address, big, cite, code,
+		del, dfn, em, img, ins, kbd, q, s, samp,
+		small, strike, strong, sub, sup, tt, var,
+		b, u, i, center,
+		dl, dt, dd, ol, ul, li,
+		fieldset, form, label, legend,
+		table, caption, tbody, tfoot, thead, tr, th, td,
+		article, aside, canvas, details, embed, 
+		figure, figcaption, footer, header, hgroup, 
+		menu, nav, output, ruby, section, summary,
+		time, mark, audio, video {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 100%;
+			font: inherit;
+			vertical-align: baseline;
+		}
+		body,input,textarea{
+			font-family: Arial, Helvetica, sans-serif;
+			margin: 0;
+		}
+		ul, li{
+			list-style: none;
+		}
+		#container{
+			width: 500px;
+			height: 500px;
+			margin: 100px auto;
+			border: 1px solid #000;
+		}
+		#numberDisplay{
+			float: left;
+		}
+		ul{
+			clear: both;
+		}
+		li{
+			color: #00f;
+			font-size: 20px;
+			font-weight: bold;
+			padding: 10px;
+			display: block;
+			float: left;
+			cursor: pointer;
+			line-height: 1em;
+			min-width: 19px;
+			text-align: center;
+		}
+		#target{
+			color: #f00;
+			font-size: 25px;
+			font-weight: bold;
+			padding: 10px;
+			float: right;
+		}
+		.clicked{
+			background: #ccc;
+			border-radius: 50%;
+		}
+	</style>
+	<script type="text/javascript" src="jquery-v1.7.2.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var numberArray= [],
+				length = 5,
+				sum = 0,
+				targetnumber = 0,
+				i, j, n1,
+				innerHTML = '',
+				numberCount = 0,
+				targetCount = 0,
+				randI = 0, 
+				randJ = 0, 
+				flag = -1; 
+
+			// expand to have the correct amount or rows
+			for( i = 0; i < length; i++ ) {
+			  numberArray.push( [] );
+			}
+
+			// expand all rows to have the correct amount of cols and add number to each cell
+			for ( i = 0; i < length; i++) {
+			    for ( j =  numberArray[i].length; j < length; j++) {
+			        do {
+						n1 = Math.round( Math.random() * 9 );
+					} while( n1 === 0 );
+					numberArray[i].push( n1 );
+			    }
+			}
+
+			//calculating the target
+			var target = function() {
+				targetnumber = 0;
+				numberCount = 0;
+				var invalidIdCount = 0;
+				$( '#numberDisplay' ).find( 'ul' ).each(function () {
+					numberCount = numberCount + $(this).find('li').size();
+				});
+				if( numberCount > 0 ) {
+					do {
+						targetCount = Math.round( Math.random() * (numberCount-1) ) + 1;
+					} while ( targetCount === 0 );
+				}
+				else{
+					$('#target').text('');
+					if(confirm('congragulations!! you have won the game. Do you want to replay? ')){
+						flag = 1;
+					}else{
+						flag = 0;
+					}
+					return;
+				}
+				for ( i = 0; i < targetCount; i++ ) {
+					randI = Math.round( Math.random() * 4 );
+					randJ = Math.round( Math.random() * 4 );
+					if( $( '#li' + randI + randJ ).length === 1 ) {
+						if( !( $( '#li' + randI + randJ ).hasClass('selected') ) ){
+							$( '#li' + randI + randJ ).addClass('selected');							
+							targetnumber = targetnumber + parseInt( $( '#li' + randI + randJ ).text(), 10 );
+						}
+					} else {
+						invalidIdCount++;
+					}		
+					if( (invalidIdCount === targetCount) && (targetnumber === 0) ){ 
+						i = -1;
+						invalidIdCount = 0;
+					}
+				}
+				$('.selected').removeClass();
+
+				$( '#target' ).text( targetnumber );
+			}
+
+			//displaying the contents in array to the matrix
+			for( i = 0; i < length; i++) {
+				innerHTML = '<ul>';
+				for( j = 0; j < length; j++) {
+					innerHTML = innerHTML + "<li id='li" + i + j + "'>" + numberArray[i][j] + "</li>" ;
+				}
+				innerHTML = innerHTML + '</ul>';
+				$( '#numberDisplay' ).append( innerHTML );
+			}
+
+			//init function
+			var init = function(){
+				flag = -1;
+				target();
+				$( 'body li' ).bind( 'click' );
+				calculatingSum();
+			}
+
+			//function for calculating sum of clicked numbers
+			var calculatingSum = function(){
+				var clickedsum = 0;
+				var clickedLi;
+				$( 'li' ).click(function(){
+					clickedLi = $( this );
+					if( !( clickedLi.hasClass( 'clicked' ) ) ){
+						clickedsum = clickedsum + parseInt( $( clickedLi ).text(), 10 );
+					}	
+					if( clickedsum <= targetnumber ) {
+						$( clickedLi ).addClass( 'clicked' );
+					} 
+					else if( clickedsum > targetnumber ) {
+						alert('Sorry, you have lost :(  ');
+						$( 'body li' ).unbind( 'click' );
+						clickedsum = 0;
+						init();
+						$('li').removeClass('clicked');
+					} 
+
+					if( clickedsum === targetnumber ) {
+						$( 'body li' ).unbind( 'click' );
+						if( !( $( clickedLi ).hasClass( 'clicked' ) ) ){
+							$( clickedLi ).addClass( 'clicked' );
+						}
+						$( '.clicked' ).remove();
+						if($( 'body' ).find( 'li' ).size() > -1){
+							init();
+							$('li').removeClass();
+						}
+					}
+				});
+			}
+			
+			if(flag === 1){
+				init();
+				alert('flag = 1');
+			}
+
+			init();
+
+		});
+	</script>
+</head>
+<body>
+	<div id="container">
+		<div id="numberDisplay"></div>
+		<p id="target">0</p>
+	</div>
+</body>
+</html>
