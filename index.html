@@ -31,39 +31,130 @@
 		}
 		#container{
 			width: 500px;
-			height: 500px;
+			height: 320px;
 			margin: 100px auto;
 			border: 1px solid #000;
 		}
 		#numberDisplay{
 			float: left;
+			margin: 40px 0 0 40px;
 		}
 		ul{
-			clear: both;
+			float: left;
+			width: 48px;
+			height: 240px;
+			position: relative;
 		}
 		li{
-			color: #00f;
-			font-size: 20px;
+			color: #fff;
 			font-weight: bold;
+			font-style: oblique;
+			font-size: 24px;
+			text-shadow: 1px 1px 3px #000;
+			text-align: left;
+			text-indent: 3px;
+			border-radius: 5px;
+			border: 3px solid #F8DFB3;
+			box-shadow: 0 0 1px 1px #999;
 			padding: 10px;
 			display: block;
-			float: left;
 			cursor: pointer;
 			line-height: 1em;
-			min-width: 19px;
-			text-align: center;
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			left: 0;
+			
+			background: rgb(168,21,53); /* Old browsers */
+			/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNhODE1MzUiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSI0OCUiIHN0b3AtY29sb3I9IiM4ZjAyMjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNmQwMDE5IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+			background: -moz-radial-gradient(center, ellipse cover,  rgba(168,21,53,1) 0%, rgba(143,2,34,1) 48%, rgba(109,0,25,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(168,21,53,1)), color-stop(48%,rgba(143,2,34,1)), color-stop(100%,rgba(109,0,25,1))); /* Chrome,Safari4+ */
+			background: -webkit-radial-gradient(center, ellipse cover,  rgba(168,21,53,1) 0%,rgba(143,2,34,1) 48%,rgba(109,0,25,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-radial-gradient(center, ellipse cover,  rgba(168,21,53,1) 0%,rgba(143,2,34,1) 48%,rgba(109,0,25,1) 100%); /* Opera 12+ */
+			background: -ms-radial-gradient(center, ellipse cover,  rgba(168,21,53,1) 0%,rgba(143,2,34,1) 48%,rgba(109,0,25,1) 100%); /* IE10+ */
+			background: radial-gradient(ellipse at center,  rgba(168,21,53,1) 0%,rgba(143,2,34,1) 48%,rgba(109,0,25,1) 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a81535', endColorstr='#6d0019',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+
+			-webkit-transition: all .35s ease-in;
+			   -moz-transition: all .35s ease-in;
+			    -ms-transition: all .35s ease-in;
+			     -o-transition: all .35s ease-in;
+			        transition: all .35s ease-in;
+
 		}
-		#target{
-			color: #f00;
-			font-size: 25px;
-			font-weight: bold;
-			padding: 10px;
+		li:nth-last-child(1){bottom: 0px;}
+		li:nth-last-child(2){bottom: 48px;}
+		li:nth-last-child(3){bottom: 96px;}
+		li:nth-last-child(4){bottom: 144px;}
+		li:nth-last-child(5){bottom: 192px;}
+
+		#targetWrapper,
+		#scoreWrapper{			
 			float: right;
+			margin: 20px 40px 0 0;
+			text-align: center;			
+			position: relative;
+			border-radius: 10px;
+			background: rgb(232,212,183); /* Old browsers */
+			/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNlOGQ0YjciIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2MxOWU2NyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjYzE5ZTY3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iNDklIiBzdG9wLWNvbG9yPSIjYjU4NTNmIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+			background: -moz-radial-gradient(center, ellipse cover,  rgba(232,212,183,1) 0%, rgba(193,158,103,1) 0%, rgba(193,158,103,1) 0%, rgba(181,133,63,1) 49%); /* FF3.6+ */
+			background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(232,212,183,1)), color-stop(0%,rgba(193,158,103,1)), color-stop(0%,rgba(193,158,103,1)), color-stop(49%,rgba(181,133,63,1))); /* Chrome,Safari4+ */
+			background: -webkit-radial-gradient(center, ellipse cover,  rgba(232,212,183,1) 0%,rgba(193,158,103,1) 0%,rgba(193,158,103,1) 0%,rgba(181,133,63,1) 49%); /* Chrome10+,Safari5.1+ */
+			background: -o-radial-gradient(center, ellipse cover,  rgba(232,212,183,1) 0%,rgba(193,158,103,1) 0%,rgba(193,158,103,1) 0%,rgba(181,133,63,1) 49%); /* Opera 12+ */
+			background: -ms-radial-gradient(center, ellipse cover,  rgba(232,212,183,1) 0%,rgba(193,158,103,1) 0%,rgba(193,158,103,1) 0%,rgba(181,133,63,1) 49%); /* IE10+ */
+			background: radial-gradient(ellipse at center,  rgba(232,212,183,1) 0%,rgba(193,158,103,1) 0%,rgba(193,158,103,1) 0%,rgba(181,133,63,1) 49%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8d4b7', endColorstr='#b5853f',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
 		}
-		.clicked{
-			background: #ccc;
-			border-radius: 50%;
+		#targetWrapper{
+			padding: 35px 25px 10px;
+			margin-top: 50px;
+			height: 83px;	
+			width: 100px;		
 		}
+		#scoreWrapper{
+			padding: 15px 5px 10px;
+			width: 140px;
+		}
+		#targetWrapper p,
+		#scoreWrapper p{
+			font-size: 17px;
+			font-weight: bold;
+			text-transform: uppercase;
+			color: transparent;
+			text-shadow: 0px 1px 1px #FED;
+			width: 50%;
+			position: absolute;			
+		}
+		#targetWrapper p{
+			top: 6px;
+			left: 0;
+			-webkit-transform: rotate(-15deg);
+			   -moz-transform: rotate(-15deg);
+			    -ms-transform: rotate(-15deg);
+			     -o-transform: rotate(-15deg);
+			        transform: rotate(-15deg);
+		}
+		#scoreWrapper p{
+			top: 0;
+			left: -6px;
+			-webkit-transform: rotate(-5deg);
+			   -moz-transform: rotate(-5deg);
+			    -ms-transform: rotate(-5deg);
+			     -o-transform: rotate(-5deg);
+			        transform: rotate(-5deg);
+		}
+		#target,
+		#score{
+			color: #fff;
+			text-shadow: 1px 1px 3px #533D1C;
+			font-size: 85px;
+			line-height: 1em;
+			font-weight: bold;			
+		}
+		#score{	font-size: 45px; }
+		.clicked{ opacity: 0.4; }
 	</style>
 	<script type="text/javascript" src="jquery-v1.7.2.js"></script>
 	<script type="text/javascript">
@@ -78,7 +169,8 @@
 				targetCount = 0,
 				randI = 0, 
 				randJ = 0, 
-				flag = -1; 
+				flag = -1,
+				score = 0; 
 
 			// expand to have the correct amount or rows
 			for( i = 0; i < length; i++ ) {
@@ -110,11 +202,8 @@
 				}
 				else{
 					$('#target').text('');
-					if(confirm('congragulations!! you have won the game. Do you want to replay? ')){
-						flag = 1;
-					}else{
-						flag = 0;
-					}
+					//alert('congragulations!! you have won the game. ');
+					flag = 1;
 					return;
 				}
 				for ( i = 0; i < targetCount; i++ ) {
@@ -150,16 +239,20 @@
 
 			//init function
 			var init = function(){
-				flag = -1;
+				//flag = -1;
 				target();
+				if(flag === 1){					
+					return;
+				}
 				$( 'body li' ).bind( 'click' );
 				calculatingSum();
 			}
 
 			//function for calculating sum of clicked numbers
 			var calculatingSum = function(){
-				var clickedsum = 0;
-				var clickedLi;
+				var clickedsum = 0,
+					clickedLiCount = 0,
+					clickedLi;
 				$( 'li' ).click(function(){
 					clickedLi = $( this );
 					if( !( clickedLi.hasClass( 'clicked' ) ) ){
@@ -167,6 +260,7 @@
 					}	
 					if( clickedsum <= targetnumber ) {
 						$( clickedLi ).addClass( 'clicked' );
+						clickedLiCount++;
 					} 
 					else if( clickedsum > targetnumber ) {
 						alert('Sorry, you have lost :(  ');
@@ -180,8 +274,16 @@
 						$( 'body li' ).unbind( 'click' );
 						if( !( $( clickedLi ).hasClass( 'clicked' ) ) ){
 							$( clickedLi ).addClass( 'clicked' );
+							clickedLiCount++;							
 						}
+						j = 10;
+						for (i = 0; i<clickedLiCount; i++){
+							score = score + ( ( i + 1 ) * j );
+							j = j + 5;
+						}
+						$( '#score' ).text(score*10);
 						$( '.clicked' ).remove();
+
 						if($( 'body' ).find( 'li' ).size() > -1){
 							init();
 							$('li').removeClass();
@@ -190,11 +292,6 @@
 				});
 			}
 			
-			if(flag === 1){
-				init();
-				alert('flag = 1');
-			}
-
 			init();
 
 		});
@@ -203,7 +300,13 @@
 <body>
 	<div id="container">
 		<div id="numberDisplay"></div>
-		<p id="target">0</p>
-	</div>
+		<div id="targetWrapper">
+			<p>Target Number</p>
+			<span id="target">0</span>
+		</div>
+		<div id="scoreWrapper">
+			<p>Score</p>
+			<span id="score">0</span>
+		</div>
 </body>
 </html>
