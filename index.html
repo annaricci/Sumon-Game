@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8" />
 	<title>Sumon</title>
 	<style>
 		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -32,8 +33,38 @@
 		#container{
 			width: 500px;
 			height: 320px;
+			position: relative;
 			margin: 100px auto;
 			border: 1px solid #000;
+			background: url('https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQoHyUX5d-eFZwoPV_Q4OobCRSqzuAixNowOov_fdLiWcVMBoRb') no-repeat 0 0 / 100% 100% transparent;
+		}
+		#gameWrapper,
+		#resultWrapper p{display: none;}
+		#resultWrapper p{
+			position: absolute;
+			top: 30%;
+			left: 0;
+			font-size: 40px;
+			text-align: center;
+			width: 100%;
+		}
+		#lost{			
+			color: #c40404;
+			text-shadow:  1px 1px 1px #7c0101;
+		}
+		button{
+			border: none;
+			outline: none;
+			background: transparent;
+			color: #a33621;
+			font-weight: bold;
+			font-size: 45px;
+			font-style: oblique;
+			line-height: 1em;
+			text-shadow: 1px 1px 0 #2b1414;
+			display: block;
+			margin: 0 auto;
+			padding: 27% 2%;		
 		}
 		#numberDisplay{
 			float: left;
@@ -76,11 +107,11 @@
 			background: radial-gradient(ellipse at center,  rgba(168,21,53,1) 0%,rgba(143,2,34,1) 48%,rgba(109,0,25,1) 100%); /* W3C */
 			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a81535', endColorstr='#6d0019',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
 
-			-webkit-transition: all .35s ease-in;
-			   -moz-transition: all .35s ease-in;
-			    -ms-transition: all .35s ease-in;
-			     -o-transition: all .35s ease-in;
-			        transition: all .35s ease-in;
+			-webkit-transition: bottom .45s ease-in;
+			   -moz-transition: bottom .45s ease-in;
+			    -ms-transition: bottom .45s ease-in;
+			     -o-transition: bottom .45s ease-in;
+			        transition: bottom .45s ease-in;
 
 		}
 		li:nth-last-child(1){bottom: 0px;}
@@ -158,7 +189,7 @@
 	</style>
 	<script type="text/javascript" src="jquery-v1.7.2.js"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
+		$(function(){
 			var numberArray= [],
 				length = 5,
 				sum = 0,
@@ -171,21 +202,6 @@
 				randJ = 0, 
 				flag = -1,
 				score = 0; 
-
-			// expand to have the correct amount or rows
-			for( i = 0; i < length; i++ ) {
-			  numberArray.push( [] );
-			}
-
-			// expand all rows to have the correct amount of cols and add number to each cell
-			for ( i = 0; i < length; i++) {
-			    for ( j =  numberArray[i].length; j < length; j++) {
-			        do {
-						n1 = Math.round( Math.random() * 9 );
-					} while( n1 === 0 );
-					numberArray[i].push( n1 );
-			    }
-			}
 
 			//calculating the target
 			var target = function() {
@@ -202,9 +218,8 @@
 				}
 				else{
 					$('#target').text('');
-					//alert('congragulations!! you have won the game. ');
 					flag = 1;
-					return;
+					gameOver();
 				}
 				for ( i = 0; i < targetCount; i++ ) {
 					randI = Math.round( Math.random() * 4 );
@@ -227,27 +242,6 @@
 				$( '#target' ).text( targetnumber );
 			}
 
-			//displaying the contents in array to the matrix
-			for( i = 0; i < length; i++) {
-				innerHTML = '<ul>';
-				for( j = 0; j < length; j++) {
-					innerHTML = innerHTML + "<li id='li" + i + j + "'>" + numberArray[i][j] + "</li>" ;
-				}
-				innerHTML = innerHTML + '</ul>';
-				$( '#numberDisplay' ).append( innerHTML );
-			}
-
-			//init function
-			var init = function(){
-				//flag = -1;
-				target();
-				if(flag === 1){					
-					return;
-				}
-				$( 'body li' ).bind( 'click' );
-				calculatingSum();
-			}
-
 			//function for calculating sum of clicked numbers
 			var calculatingSum = function(){
 				var clickedsum = 0,
@@ -263,11 +257,11 @@
 						clickedLiCount++;
 					} 
 					else if( clickedsum > targetnumber ) {
-						alert('Sorry, you have lost :(  ');
 						$( 'body li' ).unbind( 'click' );
 						clickedsum = 0;
-						init();
 						$('li').removeClass('clicked');
+						flag = 2;
+						gameOver();
 					} 
 
 					if( clickedsum === targetnumber ) {
@@ -285,28 +279,99 @@
 						$( '.clicked' ).remove();
 
 						if($( 'body' ).find( 'li' ).size() > -1){
-							init();
+							playGame();
 							$('li').removeClass();
+						}
+						else{
+							alert('last li');
+							gameOver();
 						}
 					}
 				});
 			}
+
+			var gameOver = function(){
+				if(flag === 1){
+					$('#won').css('display','block');
+				}
+				else if(flag === 2){
+					$('#lost').css('display','block');
+				}
+				$('button').text('Replay');
+				$('button').css({display : 'block', padding : '33% 2% 20%'});
+				$('#gameWrapper').css('display','none');
+			}
+
+			//play Game function
+			var playGame = function(){
+				console.log('playGame called');
+				target();
+				$( 'body li' ).bind( 'click' );
+				calculatingSum();
+			}
+
+			var init = function(){
+				// expand to have the correct amount or rows
+				for( i = 0; i < length; i++ ) {
+				  numberArray.push( [] );
+				}
+
+				// expand all rows to have the correct amount of cols and add number to each cell
+				for ( i = 0; i < length; i++) {
+				    for ( j =  numberArray[i].length; j < length; j++) {
+				        do {
+							n1 = Math.round( Math.random() * 9 );
+						} while( n1 === 0 );
+						numberArray[i].push( n1 );
+				    }
+				}
+
+				//displaying the contents in array to the matrix
+				for( i = 0; i < length; i++) {
+					innerHTML = '<ul>';
+					for( j = 0; j < length; j++) {
+						innerHTML = innerHTML + "<li id='li" + i + j + "'>" + numberArray[i][j] + "</li>" ;
+					}
+					innerHTML = innerHTML + '</ul>';
+					$( '#numberDisplay' ).append( innerHTML );
+				}
+
+
+				playGame();
+			}
 			
-			init();
+			$('button').click(function(){
+				flag = -1;
+				if($('#numberDisplay').html().length !== 0){
+					$('#numberDisplay').html('');
+				}
+				$(this).css('display','none');
+				$('#gameWrapper').css('display','block');
+				$('#resultWrapper p').css('display','none');
+				init();				
+			});
 
 		});
 	</script>
 </head>
-<body>
+<body>	
 	<div id="container">
-		<div id="numberDisplay"></div>
-		<div id="targetWrapper">
-			<p>Target Number</p>
-			<span id="target">0</span>
+		<button>Play</button>
+		<div id="gameWrapper">
+			<div id="numberDisplay"></div>
+			<div id="targetWrapper">
+				<p>Target Number</p>
+				<span id="target">0</span>
+			</div>
+			<div id="scoreWrapper">
+				<p>Score</p>
+				<span id="score">0</span>
+			</div>
 		</div>
-		<div id="scoreWrapper">
-			<p>Score</p>
-			<span id="score">0</span>
+		<div id="resultWrapper">
+			<p id="won">Congragulations!! You have won</p>
+			<p id="lost">Sorry, you have lost</p>
 		</div>
+	</div>
 </body>
 </html>
