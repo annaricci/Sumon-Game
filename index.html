@@ -12,8 +12,8 @@
 		dl, dt, dd, ol, ul, li,
 		fieldset, form, label, legend,
 		table, caption, tbody, tfoot, thead, tr, th, td,
-		article, aside, canvas, details, embed, 
-		figure, figcaption, footer, header, hgroup, 
+		article, aside, canvas, details, embed,
+		figure, figcaption, footer, header, hgroup,
 		menu, nav, output, ruby, section, summary,
 		time, mark, audio, video {
 			margin: 0;
@@ -48,7 +48,7 @@
 			text-align: center;
 			width: 100%;
 		}
-		#lost{			
+		#lost{
 			color: #c40404;
 			text-shadow:  1px 1px 1px #7c0101;
 		}
@@ -64,7 +64,7 @@
 			text-shadow: 1px 1px 0 #2b1414;
 			display: block;
 			margin: 0 auto;
-			padding: 27% 2%;		
+			padding: 27% 2%;
 		}
 		#numberDisplay{
 			float: left;
@@ -95,7 +95,7 @@
 			height: 20px;
 			position: absolute;
 			left: 0;
-			
+
 			background: rgb(168,21,53); /* Old browsers */
 			/* IE9 SVG, needs conditional override of 'filter' to 'none' */
 			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNhODE1MzUiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSI0OCUiIHN0b3AtY29sb3I9IiM4ZjAyMjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjNmQwMDE5IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -121,10 +121,10 @@
 		li:nth-last-child(5){bottom: 192px;}
 
 		#targetWrapper,
-		#scoreWrapper{			
+		#scoreWrapper{
 			float: right;
 			margin: 20px 40px 0 0;
-			text-align: center;			
+			text-align: center;
 			position: relative;
 			border-radius: 10px;
 			background: rgb(232,212,183); /* Old browsers */
@@ -141,8 +141,8 @@
 		#targetWrapper{
 			padding: 35px 25px 10px;
 			margin-top: 50px;
-			height: 83px;	
-			width: 100px;		
+			height: 83px;
+			width: 100px;
 		}
 		#scoreWrapper{
 			padding: 15px 5px 10px;
@@ -156,7 +156,7 @@
 			color: transparent;
 			text-shadow: 0px 1px 1px #FED;
 			width: 50%;
-			position: absolute;			
+			position: absolute;
 		}
 		#targetWrapper p{
 			top: 6px;
@@ -182,179 +182,15 @@
 			text-shadow: 1px 1px 3px #533D1C;
 			font-size: 85px;
 			line-height: 1em;
-			font-weight: bold;			
+			font-weight: bold;
 		}
 		#score{	font-size: 45px; }
 		.clicked{ opacity: 0.4; }
 	</style>
 	<script type="text/javascript" src="jquery-v1.7.2.js"></script>
-	<script type="text/javascript">
-		$(function(){
-			var numberArray= [],
-				length = 5,
-				sum = 0,
-				targetnumber = 0,
-				i, j, n1,
-				innerHTML = '',
-				numberCount = 0,
-				targetCount = 0,
-				randI = 0, 
-				randJ = 0, 
-				flag = -1,
-				score = 0; 
-
-			//calculating the target
-			var target = function() {
-				targetnumber = 0;
-				numberCount = 0;
-				var invalidIdCount = 0;
-				$( '#numberDisplay' ).find( 'ul' ).each(function () {
-					numberCount = numberCount + $(this).find('li').size();
-				});
-				if( numberCount > 0 ) {
-					do {
-						targetCount = Math.round( Math.random() * (numberCount-1) ) + 1;
-					} while ( targetCount === 0 );
-				}
-				else{
-					$('#target').text('');
-					flag = 1;
-					gameOver();
-				}
-				for ( i = 0; i < targetCount; i++ ) {
-					randI = Math.round( Math.random() * 4 );
-					randJ = Math.round( Math.random() * 4 );
-					if( $( '#li' + randI + randJ ).length === 1 ) {
-						if( !( $( '#li' + randI + randJ ).hasClass('selected') ) ){
-							$( '#li' + randI + randJ ).addClass('selected');							
-							targetnumber = targetnumber + parseInt( $( '#li' + randI + randJ ).text(), 10 );
-						}
-					} else {
-						invalidIdCount++;
-					}		
-					if( (invalidIdCount === targetCount) && (targetnumber === 0) ){ 
-						i = -1;
-						invalidIdCount = 0;
-					}
-				}
-				$('.selected').removeClass();
-
-				$( '#target' ).text( targetnumber );
-			}
-
-			//function for calculating sum of clicked numbers
-			var calculatingSum = function(){
-				var clickedsum = 0,
-					clickedLiCount = 0,
-					clickedLi;
-				$( 'li' ).click(function(){
-					clickedLi = $( this );
-					if( !( clickedLi.hasClass( 'clicked' ) ) ){
-						clickedsum = clickedsum + parseInt( $( clickedLi ).text(), 10 );
-					}	
-					if( clickedsum <= targetnumber ) {
-						$( clickedLi ).addClass( 'clicked' );
-						clickedLiCount++;
-					} 
-					else if( clickedsum > targetnumber ) {
-						$( 'body li' ).unbind( 'click' );
-						clickedsum = 0;
-						$('li').removeClass('clicked');
-						flag = 2;
-						gameOver();
-					} 
-
-					if( clickedsum === targetnumber ) {
-						$( 'body li' ).unbind( 'click' );
-						if( !( $( clickedLi ).hasClass( 'clicked' ) ) ){
-							$( clickedLi ).addClass( 'clicked' );
-							clickedLiCount++;							
-						}
-						j = 10;
-						for (i = 0; i<clickedLiCount; i++){
-							score = score + ( ( i + 1 ) * j );
-							j = j + 5;
-						}
-						$( '#score' ).text(score*10);
-						$( '.clicked' ).remove();
-
-						if($( 'body' ).find( 'li' ).size() > -1){
-							playGame();
-							$('li').removeClass();
-						}
-						else{
-							alert('last li');
-							gameOver();
-						}
-					}
-				});
-			}
-
-			var gameOver = function(){
-				if(flag === 1){
-					$('#won').css('display','block');
-				}
-				else if(flag === 2){
-					$('#lost').css('display','block');
-				}
-				$('button').text('Replay');
-				$('button').css({display : 'block', padding : '33% 2% 20%'});
-				$('#gameWrapper').css('display','none');
-			}
-
-			//play Game function
-			var playGame = function(){
-				console.log('playGame called');
-				target();
-				$( 'body li' ).bind( 'click' );
-				calculatingSum();
-			}
-
-			var init = function(){
-				// expand to have the correct amount or rows
-				for( i = 0; i < length; i++ ) {
-				  numberArray.push( [] );
-				}
-
-				// expand all rows to have the correct amount of cols and add number to each cell
-				for ( i = 0; i < length; i++) {
-				    for ( j =  numberArray[i].length; j < length; j++) {
-				        do {
-							n1 = Math.round( Math.random() * 9 );
-						} while( n1 === 0 );
-						numberArray[i].push( n1 );
-				    }
-				}
-
-				//displaying the contents in array to the matrix
-				for( i = 0; i < length; i++) {
-					innerHTML = '<ul>';
-					for( j = 0; j < length; j++) {
-						innerHTML = innerHTML + "<li id='li" + i + j + "'>" + numberArray[i][j] + "</li>" ;
-					}
-					innerHTML = innerHTML + '</ul>';
-					$( '#numberDisplay' ).append( innerHTML );
-				}
-
-
-				playGame();
-			}
-			
-			$('button').click(function(){
-				flag = -1;
-				if($('#numberDisplay').html().length !== 0){
-					$('#numberDisplay').html('');
-				}
-				$(this).css('display','none');
-				$('#gameWrapper').css('display','block');
-				$('#resultWrapper p').css('display','none');
-				init();				
-			});
-
-		});
-	</script>
+	<script type="text/javascript" src="script.js></script>
 </head>
-<body>	
+<body>
 	<div id="container">
 		<button>Play</button>
 		<div id="gameWrapper">
